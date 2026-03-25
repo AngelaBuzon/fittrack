@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2>Mis rutas</h2>
+        <a href="{{ url_for('rutas.nueva_ruta') }}" class="btn btn-dark">+ Nueva ruta</a>
+    </div>
+</div>
+
+<div class="row mt-4">
+    {% if rutas %}
+        {% for ruta in rutas %}
+        <div class="col-md-6 mb-3">
+            <div class="card p-3">
+                <div class="d-flex justify-content-between">
+                    <h5>{{ ruta.tipo | capitalize }}</h5>
+                    <span class="text-muted">{{ ruta.fecha.strftime('%d/%m/%Y') }}</span>
+                </div>
+                <p class="mb-1">Distancia: <strong>{{ ruta.distancia_km }} km</strong></p>
+                <p class="mb-1">Duración: <strong>{{ ruta.duracion_min }} min</strong></p>
+                <p class="mb-0 text-muted">{{ ruta.notas or 'Sin notas' }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <p class="text-muted">No tienes rutas registradas todavía.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

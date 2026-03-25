@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-1">Hola, {{ current_user.nombre }}</h2>
+        <p class="text-muted">Bienvenida a FitTrack</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4">
+            <h1 class="display-4">🏋️</h1>
+            <h5 class="mt-2">Musculación</h5>
+            <p class="text-muted">Registra tus sesiones de gym</p>
+            <a href="{{ url_for('musculacion.index') }}" class="btn btn-dark">Ir a musculación</a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4">
+            <h1 class="display-4">🏃</h1>
+            <h5 class="mt-2">Running</h5>
+            <p class="text-muted">Registra tus rutas</p>
+            <a href="{{ url_for('rutas.index') }}" class="btn btn-dark">Ir a rutas</a>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4">
+            <h1 class="display-4">📈</h1>
+            <h5 class="mt-2">Progresión</h5>
+            <p class="text-muted">Visualiza tu evolución</p>
+            <a href="#" class="btn btn-dark">Ver progresión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
