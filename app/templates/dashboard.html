@@ -9,24 +9,53 @@
 </div>
 
 <div class="row mb-4">
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <div class="card p-3 text-center">
             <h1 class="display-5 fw-bold">{{ total_sesiones }}</h1>
             <p class="text-muted mb-0">Sesiones de gym</p>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <div class="card p-3 text-center">
             <h1 class="display-5 fw-bold">{{ total_rutas }}</h1>
             <p class="text-muted mb-0">Rutas completadas</p>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <div class="card p-3 text-center">
             <h1 class="display-5 fw-bold">{{ total_km }}</h1>
             <p class="text-muted mb-0">Kilómetros totales</p>
         </div>
     </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-3 text-center">
+            <h1 class="display-5 fw-bold">{{ total_minutos }}</h1>
+            <p class="text-muted mb-0">Minutos activos</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    {% if mejor_ruta %}
+    <div class="col-md-6 mb-3">
+        <div class="card p-3">
+            <h6 class="text-muted mb-1">Mejor ruta</h6>
+            <h4 class="mb-0">{{ mejor_ruta.distancia_km }} km</h4>
+            <p class="text-muted mb-0" style="font-size:13px">
+                {{ mejor_ruta.tipo | capitalize }} · {{ mejor_ruta.fecha.strftime('%d/%m/%Y') }}
+            </p>
+        </div>
+    </div>
+    {% endif %}
+    {% if peso_maximo %}
+    <div class="col-md-6 mb-3">
+        <div class="card p-3">
+            <h6 class="text-muted mb-1">Peso máximo levantado</h6>
+            <h4 class="mb-0">{{ peso_maximo }} kg</h4>
+            <p class="text-muted mb-0" style="font-size:13px">Récord personal</p>
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 <div class="row mb-4">
@@ -61,9 +90,9 @@
     </div>
     <div class="col-md-4 mb-3">
         <div class="card text-center p-4">
-            <h1 class="display-4">💪</h1>
-            <h5 class="mt-2">Nueva sesión</h5>
-            <a href="{{ url_for('musculacion.nueva_sesion') }}" class="btn btn-dark mt-2">Registrar</a>
+            <h1 class="display-4">📋</h1>
+            <h5 class="mt-2">Historial</h5>
+            <a href="{{ url_for('dashboard.historial') }}" class="btn btn-dark mt-2">Ver historial</a>
         </div>
     </div>
 </div>

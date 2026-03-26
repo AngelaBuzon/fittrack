@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
-from app.models import SesionMusculacion, Ruta
+from app.models import SesionMusculacion, Ruta, Ejercicio
 from datetime import datetime
 
 dashboard_bp = Blueprint('dashboard', __name__)
@@ -25,6 +25,14 @@ def index():
     total_sesiones = len(sesiones)
     total_rutas = len(rutas)
     total_km = round(sum(r.distancia_km for r in rutas), 1)
+    total_minutos = sum(r.duracion_min for r in rutas)
+
+    mejor_ruta = max(rutas, key=lambda r: r.distancia_km) if rutas else None
+
+    ejercicios = Ejercicio.query.join(SesionMusculacion).filter(
+        SesionMusculacion.usuario_id == current_user.id
+    ).all()
+    peso_maximo = max((e.peso for e in ejercicios if e.peso), default=0)
 
     return render_template('dashboard.html',
         sesiones_fechas=sesiones_fechas,
@@ -33,7 +41,10 @@ def index():
         rutas_distancias=rutas_distancias,
         total_sesiones=total_sesiones,
         total_rutas=total_rutas,
-        total_km=total_km
+        total_km=total_km,
+        total_minutos=total_minutos,
+        mejor_ruta=mejor_ruta,
+        peso_maximo=peso_maximo
     )
 
 @dashboard_bp.route('/historial')
