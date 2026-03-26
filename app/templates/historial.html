@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2>Historial de actividades</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <form method="GET" class="row g-2">
+            <div class="col-md-4">
+                <select name="tipo" class="form-select">
+                    <option value="">Todas las actividades</option>
+                    <option value="musculacion" {% if tipo == 'musculacion' %}selected{% endif %}>Musculación</option>
+                    <option value="running" {% if tipo == 'running' %}selected{% endif %}>Running</option>
+                    <option value="ciclismo" {% if tipo == 'ciclismo' %}selected{% endif %}>Ciclismo</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="fecha_desde" class="form-control" value="{{ fecha_desde or '' }}">
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="fecha_hasta" class="form-control" value="{{ fecha_hasta or '' }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-100">Filtrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% if actividades %}
+        {% for actividad in actividades %}
+        <div class="col-md-6 mb-3">
+            <div class="card p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    {% if actividad.tipo == 'musculacion' %}
+                        <span class="badge bg-dark">🏋️ Musculación</span>
+                    {% else %}
+                        <span class="badge bg-secondary">
+                            {% if actividad.tipo == 'running' %}🏃{% else %}🚴{% endif %}
+                            {{ actividad.tipo | capitalize }}
+                        </span>
+                    {% endif %}
+                    <span class="text-muted" style="font-size:13px">{{ actividad.fecha.strftime('%d/%m/%Y') }}</span>
+                </div>
+                <h6 class="mb-1">{{ actividad.nombre }}</h6>
+                {% if actividad.detalle %}
+                    <p class="text-muted mb-0" style="font-size:13px">{{ actividad.detalle }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <p class="text-muted">No hay actividades con esos filtros.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

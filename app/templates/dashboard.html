@@ -1,37 +1,116 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row mb-4">
     <div class="col-12">
         <h2 class="mb-1">Hola, {{ current_user.nombre }}</h2>
         <p class="text-muted">Bienvenida a FitTrack</p>
     </div>
 </div>
 
-<div class="row mt-4">
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card p-3 text-center">
+            <h1 class="display-5 fw-bold">{{ total_sesiones }}</h1>
+            <p class="text-muted mb-0">Sesiones de gym</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card p-3 text-center">
+            <h1 class="display-5 fw-bold">{{ total_rutas }}</h1>
+            <p class="text-muted mb-0">Rutas completadas</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card p-3 text-center">
+            <h1 class="display-5 fw-bold">{{ total_km }}</h1>
+            <p class="text-muted mb-0">Kilómetros totales</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card p-3">
+            <h6 class="mb-3">Progresión de sesiones de gym</h6>
+            <canvas id="grafica-sesiones" height="200"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card p-3">
+            <h6 class="mb-3">Kilómetros por ruta</h6>
+            <canvas id="grafica-rutas" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-4 mb-3">
         <div class="card text-center p-4">
             <h1 class="display-4">🏋️</h1>
             <h5 class="mt-2">Musculación</h5>
-            <p class="text-muted">Registra tus sesiones de gym</p>
-            <a href="{{ url_for('musculacion.index') }}" class="btn btn-dark">Ir a musculación</a>
+            <a href="{{ url_for('musculacion.index') }}" class="btn btn-dark mt-2">Ir a musculación</a>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="card text-center p-4">
             <h1 class="display-4">🏃</h1>
-            <h5 class="mt-2">Running</h5>
-            <p class="text-muted">Registra tus rutas</p>
-            <a href="{{ url_for('rutas.index') }}" class="btn btn-dark">Ir a rutas</a>
+            <h5 class="mt-2">Rutas</h5>
+            <a href="{{ url_for('rutas.index') }}" class="btn btn-dark mt-2">Ir a rutas</a>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="card text-center p-4">
-            <h1 class="display-4">📈</h1>
-            <h5 class="mt-2">Progresión</h5>
-            <p class="text-muted">Visualiza tu evolución</p>
-            <a href="#" class="btn btn-dark">Ver progresión</a>
+            <h1 class="display-4">💪</h1>
+            <h5 class="mt-2">Nueva sesión</h5>
+            <a href="{{ url_for('musculacion.nueva_sesion') }}" class="btn btn-dark mt-2">Registrar</a>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const sesionesLabels = {{ sesiones_fechas | tojson }};
+    const sesionesData = {{ sesiones_count | tojson }};
+    const rutasLabels = {{ rutas_fechas | tojson }};
+    const rutasData = {{ rutas_distancias | tojson }};
+
+    new Chart(document.getElementById('grafica-sesiones'), {
+        type: 'line',
+        data: {
+            labels: sesionesLabels,
+            datasets: [{
+                label: 'Sesiones acumuladas',
+                data: sesionesData,
+                borderColor: '#212529',
+                backgroundColor: 'rgba(33,37,41,0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    new Chart(document.getElementById('grafica-rutas'), {
+        type: 'bar',
+        data: {
+            labels: rutasLabels,
+            datasets: [{
+                label: 'Kilómetros',
+                data: rutasData,
+                backgroundColor: 'rgba(33,37,41,0.8)',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
 {% endblock %}
