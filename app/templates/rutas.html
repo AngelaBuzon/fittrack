@@ -1,31 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row mb-4">
     <div class="col-12 d-flex justify-content-between align-items-center">
-        <h2>Mis rutas</h2>
+        <div>
+            <h2 class="mb-1">Rutas</h2>
+            <p class="text-muted mb-0" style="font-size:14px">Tus rutas de running y ciclismo</p>
+        </div>
         <a href="{{ url_for('rutas.nueva_ruta') }}" class="btn btn-dark">+ Nueva ruta</a>
     </div>
 </div>
 
-<div class="row mt-4">
+<div class="row">
     {% if rutas %}
         {% for ruta in rutas %}
         <div class="col-md-6 mb-3">
             <div class="card p-3">
-                <div class="d-flex justify-content-between">
-                    <h5>{{ ruta.tipo | capitalize }}</h5>
-                    <span class="text-muted">{{ ruta.fecha.strftime('%d/%m/%Y') }}</span>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        {% if ruta.tipo == 'running' %}
+                            <span class="badge-tipo badge-running mb-2 d-inline-block">🏃 Running</span>
+                        {% else %}
+                            <span class="badge-tipo badge-ciclismo mb-2 d-inline-block">🚴 Ciclismo</span>
+                        {% endif %}
+                        <h5 class="mb-1">{{ ruta.distancia_km }} km</h5>
+                        <p class="text-muted mb-0" style="font-size:13px">{{ ruta.duracion_min }} min · {{ ruta.notas or 'Sin notas' }}</p>
+                    </div>
+                    <span class="text-muted" style="font-size:12px">{{ ruta.fecha.strftime('%d/%m/%Y') }}</span>
                 </div>
-                <p class="mb-1">Distancia: <strong>{{ ruta.distancia_km }} km</strong></p>
-                <p class="mb-1">Duración: <strong>{{ ruta.duracion_min }} min</strong></p>
-                <p class="mb-0 text-muted">{{ ruta.notas or 'Sin notas' }}</p>
             </div>
         </div>
         {% endfor %}
     {% else %}
         <div class="col-12">
-            <p class="text-muted">No tienes rutas registradas todavía.</p>
+            <div class="card p-5 text-center">
+                <span style="font-size:3rem">🏃</span>
+                <h5 class="mt-3">No tienes rutas todavía</h5>
+                <p class="text-muted">Empieza registrando tu primera ruta</p>
+                <a href="{{ url_for('rutas.nueva_ruta') }}" class="btn btn-dark mx-auto" style="width:fit-content">+ Nueva ruta</a>
+            </div>
         </div>
     {% endif %}
 </div>

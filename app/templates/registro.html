@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <h2 class="mb-4">Crear cuenta</h2>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <span style="font-size: 2.5rem">🏋️</span>
+            <div class="auth-title mt-2">Crear cuenta</div>
+            <div class="auth-subtitle">Empieza a registrar tu progreso hoy</div>
+        </div>
+
         <form method="POST">
             <div class="mb-3">
                 <label class="form-label">Nombre</label>
-                <input type="text" name="nombre" class="form-control" required>
+                <input type="text" name="nombre" class="form-control" placeholder="Tu nombre" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" placeholder="tu@email.com" required>
             </div>
-            <div class="mb-3">
+            <div class="mb-4">
                 <label class="form-label">Contraseña</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-dark w-100">Registrarse</button>
+            <button type="submit" class="btn btn-dark w-100 py-2">Crear cuenta</button>
         </form>
-        <p class="mt-3 text-center">¿Ya tienes cuenta? 
-            <a href="{{ url_for('auth.login') }}">Inicia sesión</a>
+
+        <p class="text-center mt-4 mb-0" style="font-size:14px; color:#6b7280">
+            ¿Ya tienes cuenta?
+            <a href="{{ url_for('auth.login') }}" style="color:#2563eb; font-weight:500">Inicia sesión</a>
         </p>
     </div>
 </div>

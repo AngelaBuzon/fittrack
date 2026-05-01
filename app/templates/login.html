@@ -1,22 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <h2 class="mb-4">Iniciar sesión</h2>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <span style="font-size: 2.5rem">💪</span>
+            <div class="auth-title mt-2">Bienvenida a FitTrack</div>
+            <div class="auth-subtitle">Inicia sesión para continuar</div>
+        </div>
+
         <form method="POST">
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" placeholder="tu@email.com" required>
             </div>
-            <div class="mb-3">
+            <div class="mb-4">
                 <label class="form-label">Contraseña</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-dark w-100">Entrar</button>
+            <button type="submit" class="btn btn-dark w-100 py-2">Iniciar sesión</button>
         </form>
-        <p class="mt-3 text-center">¿No tienes cuenta? 
-            <a href="{{ url_for('auth.registro') }}">Regístrate</a>
+
+        <p class="text-center mt-4 mb-0" style="font-size:14px; color:#6b7280">
+            ¿No tienes cuenta?
+            <a href="{{ url_for('auth.registro') }}" style="color:#2563eb; font-weight:500">Regístrate</a>
         </p>
     </div>
 </div>
